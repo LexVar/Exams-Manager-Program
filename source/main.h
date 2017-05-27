@@ -5,9 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "data.h"
 // funcoes de alunos
 #include "alunos.h"
+#include "alunos_ptr.h"
 
 // funcoes de disciplinas
 #include "disciplinas.h"
