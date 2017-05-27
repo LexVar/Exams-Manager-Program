@@ -37,7 +37,7 @@ void imprime_listaAlunos(ListAlunos lista)
     printf("\n");
 }
 
-ListAlunos destroi_listaAluno(ListAlunos lista)
+ListAlunos destroi_listaAlunos(ListAlunos lista)
 {
     ListAlunos p;
     if(lista != NULL)

@@ -1,6 +1,7 @@
 #include "main.h"
 
 ListAlunos LoadAlunos(ListAlunos alunos, char *ficheiro);
+ListDisciplinas LoadDisciplinas(ListDisciplinas disciplinas, char *ficheiro);
 void menu();
 void clear_input();
 void clear_console();
@@ -9,11 +10,18 @@ void replace_end_line(char *str);
 int main(int argc, char const *argv[])
 {
     int opc;
+    // lista de alunos
     ListAlunos alunos = NULL;
-    ListAlunos aux;
+    ListAlunos aluno_aux;
     Aluno aluno, al;
     
+    // lista de disciplinas
+    ListDisciplinas disciplinas = NULL;
+    ListDisciplinas disciplina_aux;
+    Disciplina disciplina, dc;
+    
     alunos = LoadAlunos(alunos,"../ficheiros/alunos.txt");
+    disciplinas = LoadDisciplinas(disciplinas,"../ficheiros/disciplinas.txt");
     clear_console();
 
     do{
@@ -30,6 +38,8 @@ int main(int argc, char const *argv[])
                 printf("A Terminar...\n");
                 // escreve no ficheiro
                 // destroi estruturas
+                alunos = destroi_listaAlunos(alunos);
+                disciplinas = destroi_listaDisciplinas(disciplinas);
                 return 0;
             case 1: // Criar Dados de Aluno
                 printf("Insira os dados do aluno:\nNome: ");
@@ -60,14 +70,14 @@ int main(int argc, char const *argv[])
                 scanf(" %d", &al.num);
                 clear_input();
 
-                aux = procura_aluno(alunos, al);
-                if (aux == NULL)
+                aluno_aux = procura_aluno(alunos, al);
+                if (aluno_aux == NULL)
                 {
                     clear_console();
                     printf("\n -> Numero nao existente na base de dados\n");
                     break;
                 }
-                copy_aluno(&al, &aux->info);
+                copy_aluno(&al, &aluno_aux->info);
 
                 printf("Insira os dados do aluno:\nNome: ");
                 fgets(aluno.nome, MAX_NOME, stdin);
@@ -104,21 +114,81 @@ int main(int argc, char const *argv[])
                 }
 
                 break;
-            case 3: // Remover Dados de Aluno
+            case 3: // Remover dados de aluno
                 imprime_listaAlunos(alunos);
                 printf("Numero de aluno a remover: ");
                 scanf(" %d", &aluno.num);
+                clear_console();
                 alunos = elimina_aluno_lista(alunos,aluno);
 
                 break;
-            case 4: // Editar Dados de Disciplina
-                imprime_listaAlunos(alunos);
+            case 4: // Criar Dados de Disciplina
+                printf("Insira os dados da disciplina:\nNome: ");
+                fgets(disciplina.nome, MAX_NOME, stdin);
+                replace_end_line(disciplina.nome);
+                printf("Docente: ");
+                fgets(disciplina.docente, MAX_NOME, stdin);
+                replace_end_line(disciplina.docente);
+                
+                clear_console();
+                copy_disciplina(&disciplina,&disciplina);
+                
+                disciplinas = insere_ordem_disciplinas(disciplinas, disciplina);
+
 	            break;
-	        case 5: // Criar Dados de Disciplina
+	        case 5: // Editar Dados de Aluno
+                imprime_listaDisciplinas(disciplinas);
+                printf("Nome da disciplina a editar: ");
+                fgets(dc.nome, MAX_NOME, stdin);
+                replace_end_line(dc.nome);
+
+                disciplina_aux = procura_disciplina(disciplinas, dc);
+                if (disciplina_aux == NULL)
+                {
+                    clear_console();
+                    printf("\n -> Nome nao existente na base de dados\n");
+                    break;
+                }
+                copy_disciplina(&dc, &disciplina_aux->info);
+
+                printf("Insira os dados da disciplina:\nNome: ");
+                fgets(disciplina.nome, MAX_NOME, stdin);
+                replace_end_line(disciplina.nome);
+                printf("Docente: ");
+                fgets(disciplina.docente, MAX_NOME, stdin);
+                replace_end_line(disciplina.docente);
+
+                clear_console();
+                copy_disciplina(&disciplina, &disciplina);
+                
+                disciplinas = elimina_disciplina_lista(disciplinas, dc);
+                
+                if (procura_disciplina(disciplinas, disciplina) == NULL)
+                {
+                    disciplinas = insere_ordem_disciplinas(disciplinas, disciplina);
+                    clear_console();
+                    printf("\n -> Dados da disciplina editados com sucesso\n");
+                }
+                else
+                {
+                    disciplinas = insere_ordem_disciplinas(disciplinas, dc);
+                    clear_console();
+                    printf("\n -> Erro a editar dados da disciplina\n");
+                }
+
 	            break;
             case 6: // Remover Dados de Disciplina
+                imprime_listaDisciplinas(disciplinas);
+                printf("Nome de disciplina a remover: ");
+                fgets(disciplina.nome, MAX_NOME, stdin);
+                replace_end_line(disciplina.nome);
+
+                clear_console();
+                disciplinas = elimina_disciplina_lista(disciplinas,disciplina);
+
                 break;
             case 7: // Criar Exames
+                imprime_listaDisciplinas(disciplinas);
                 break;
             case 8: // Apagar Exame
                 break;
@@ -201,4 +271,23 @@ ListAlunos LoadAlunos(ListAlunos alunos, char *ficheiro)
         fclose(f);
     }
     return alunos;
+}
+
+ListDisciplinas LoadDisciplinas(ListDisciplinas disciplinas, char *ficheiro)
+{
+    FILE *f;
+    Disciplina disciplina;
+    f = fopen(ficheiro, "r");
+    if(f != NULL)
+    {
+        while(fgets(disciplina.nome, MAX_NOME, f) != NULL)
+        {
+            replace_end_line(disciplina.nome);
+            fgets(disciplina.docente, MAX_NOME, f);
+            replace_end_line(disciplina.docente);
+            disciplinas = insere_ordem_disciplinas(disciplinas, disciplina);
+        }
+        fclose(f);
+    }
+    return disciplinas;
 }

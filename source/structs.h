@@ -9,6 +9,9 @@ typedef struct
     int ano, mes, dia, hora;
 }Data;
 
+
+//----------------------------------ALUNOS-----------------------------------------
+
 // ponteiro para lista de alunos
 typedef struct AlunoNode *ListAlunos;
 
@@ -39,6 +42,12 @@ typedef struct AlunoPtrNode
     ListPtrAlunos next;
 }aluno_ptr_node;
 
+
+//----------------------------------DISCIPLINAS-----------------------------------------
+
+// ponteiro para lista de disciplinas
+typedef struct DisciplinaNode *ListDisciplinas;
+
 // estrutura de uma Disciplina
 typedef struct
 {
@@ -46,17 +55,26 @@ typedef struct
     char docente[MAX_NOME];
 }Disciplina;
 
+// lista simples ligada de Disciplinas
+typedef struct DisciplinaNode
+{
+    ListDisciplinas next;
+    Disciplina info;
+}disciplina_node;
+
+//----------------------------------EXAMES-----------------------------------------
+
 // Ponteiro para lista de Exames
 typedef struct ExameNode *ListExames;
 
 // estrutura de um exame
 typedef struct
 {
-    Disciplina disciplina;
+    Disciplina *disciplina;
     char epoca[MAX_NOME];
     Data data;
     int duracao;
-    // lista de salas ?s
+    // lista de salas
     char sala[MAX_NOME];
     ListPtrAlunos alunos;
 }Exame;

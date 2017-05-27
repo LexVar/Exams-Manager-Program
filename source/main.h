@@ -10,8 +10,9 @@
 #include "alunos.h"
 
 // funcoes de disciplinas
+#include "disciplinas.h"
 
 // funcoes de exames
-
+#include "exames.h"
 
 #endif 
