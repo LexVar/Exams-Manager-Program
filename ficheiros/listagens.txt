@@ -1,0 +1,9 @@
+Disciplina: ATD
+Docente: Alberto Cardoso
+Data: 22:00-02/02/2014
+Epoca: Normal
+Duracao: 6
+Sala: Anfiteatro A
+Numero de Alunos inscritos: 4
+--------------------
+

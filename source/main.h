@@ -15,5 +15,6 @@
 
 // funcoes de exames
 #include "exames.h"
+#include "exames_ptr.h"
 
 #endif 

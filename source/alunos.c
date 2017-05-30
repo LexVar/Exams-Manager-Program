@@ -23,6 +23,7 @@ void imprime_aluno(Aluno al)
 {
     printf("\nNome: %s\nNumero: %d\n", al.nome, al.num);
     printf("Ano Curso: %d\nRegime: %s\nCurso: %s\n", al.ano, al.regime, al.curso);
+    printf("Numero de exames inscritos: %d\n", ListPtrExames_tamanho(al.exames));
 }
 
 void imprime_listaAlunos(ListAlunos lista)
@@ -46,8 +47,10 @@ ListAlunos destroi_listaAlunos(ListAlunos lista)
         {
             p = lista;
             lista = lista->next;
+            destroi_listaPtrExames(p->info.exames);
             free(p);
         }
+        destroi_listaPtrExames(lista->info.exames);
         free(lista);
     }
     return NULL;
@@ -61,39 +64,7 @@ void copy_aluno(Aluno *al1, Aluno *al2)
     al1->ano = al2->ano;
     set_regime(al1,al2->regime);
     strcpy(al1->curso, al2->curso);
-}
-
-// verifica se o aluno esta na lista
-int verifica_Alunolista(ListAlunos lista, Aluno al)
-{
-    ListAlunos aux;
-    aux = lista;
-    while(aux != NULL && aux->info.num != al.num)
-        aux = aux->next;
-    if(aux == NULL)
-        return 0;
-    else return 1;
-}
-
-
-ListAlunos insere_fim_listaAlunos(ListAlunos lista, Aluno al)
-{
-    ListAlunos p, aux;
-    if(verifica_Alunolista(lista, al) == 1)
-        return lista;
-    p = (ListAlunos)malloc(sizeof(aluno_node));
-    aux = lista;
-    if(p != NULL)
-    {
-        copy_aluno(&p->info, &al);
-        p->next = NULL;
-        if(aux == NULL)
-            return p;
-        while(aux->next != NULL)
-            aux = aux->next;
-        aux->next = p;
-    }
-    return lista;
+    al1->exames = al2->exames;
 }
 
 ListAlunos procura_aluno(ListAlunos lista, Aluno al)
@@ -154,7 +125,14 @@ ListAlunos elimina_aluno_lista(ListAlunos lista, Aluno x)
 {
     ListAlunos aux, ant;
     procura_aluno1(lista, x, &ant, &aux);
-    if(aux != NULL)
+    if(aux != NULL && lista == aux)
+    {
+        ant = aux->next;
+        free(aux);
+        printf("\n -> Aluno Removido com sucesso\n");
+        return ant;
+    }
+    else if(aux != NULL && ant != NULL)
     {
         ant->next = aux->next;
         free(aux);
@@ -163,4 +141,28 @@ ListAlunos elimina_aluno_lista(ListAlunos lista, Aluno x)
     else
         printf("\n -> Aluno nao encontrado\n");
     return lista;
+}
+
+void escreve_alunos(Aluno al, FILE *f)
+{
+    fprintf(f, "\nNome: %s\nNumero: %d\n", al.nome, al.num);
+    fprintf(f, "Ano Curso: %d\nRegime: %s\nCurso: %s\n", al.ano, al.regime, al.curso);
+    fprintf(f, "Numero de exames inscritos: %d\n", ListPtrExames_tamanho(al.exames));
+}
+
+void escreve_listaAlunos(ListAlunos lista, char *ficheiro)
+{
+    FILE *f = fopen(ficheiro, "a");
+    ListAlunos p;
+    p = lista;
+    if (f != NULL)
+    {
+        while(p != NULL)
+        {
+            escreve_alunos(p->info, f);
+            p = p->next;
+        }
+        fprintf(f, "\n");
+        fclose(f);
+    }
 }

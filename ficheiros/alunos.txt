@@ -1,30 +1,35 @@
-Alexandre Rodrigues
-331
-2
-Normal
-LEI
-Agata Varzielas
-22
+Sofia Varzielas
+1
 2
 Trabalhador-estudante
 LEI
 Joao Folhas
-55
-3
+2
+1
 Atleta
 Economia
-Maria Josefina
-222
-1
-Dirigente associativo
-Medicina
-Adonis Rodrigues
-666
-1
-Erasmus
-LEI
-Ze das Couves
-111
+Alexandre Rodrigues
 3
+2
 Normal
 LEI
+Ze
+4
+3
+Normal
+LDM
+Maria Silva
+5
+1
+Normal
+LEI
+Alexx
+11
+1
+Normal
+Economia
+Aluno1
+12
+634115728
+Normal
+asd

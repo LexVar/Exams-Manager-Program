@@ -2,6 +2,8 @@
 #define STRUCTS_H
 
 #define MAX_NOME 51
+#define MAX_SALA 30
+#define FIM_CURSO 3
 
 // estrutura de uma data
 typedef struct
@@ -9,6 +11,8 @@ typedef struct
     int ano, mes, dia, hora;
 }Data;
 
+// Ponteiro para lista de ponteiros de alunos
+typedef struct ExamePtrNode *ListPtrExames;
 
 //----------------------------------ALUNOS-----------------------------------------
 
@@ -26,6 +30,7 @@ typedef struct
     int ano;
     char regime[MAX_NOME];
     char curso[MAX_NOME];
+    ListPtrExames exames;
 }Aluno;
 
 // lista simples ligada de Alunos
@@ -85,5 +90,12 @@ typedef struct ExameNode
     ListExames next;
     Exame info;
 }exame_node;
+
+// Lista simples de apontadores de alunos
+typedef struct ExamePtrNode
+{
+    Exame *info;
+    ListPtrExames next;
+}exame_ptr_node;
 
 #endif 

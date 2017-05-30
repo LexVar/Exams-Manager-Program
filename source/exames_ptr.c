@@ -1,20 +1,20 @@
-#include "alunos_ptr.h"
+#include "exames_ptr.h"
 
-ListPtrAlunos find_alunoPtr(ListPtrAlunos lista, Aluno al)
+ListPtrExames find_examePtr(ListPtrExames lista, Exame al)
 {
-    ListPtrAlunos aux;
+    ListPtrExames aux;
     aux = lista;
 
-    while(aux != NULL && aluno_compare(al, *(aux->info)) != 1)
+    while(aux != NULL && exame_compare(al, *(aux->info)) != 1)
         aux = aux->next;
     if(aux != NULL)
         return aux;
     return NULL;
 }
 
-int ListPtrAlunos_tamanho(ListPtrAlunos lista)
+int ListPtrExames_tamanho(ListPtrExames lista)
 {
-    ListPtrAlunos aux;
+    ListPtrExames aux;
     int i;
     i = 0;
     aux = lista;
@@ -26,9 +26,9 @@ int ListPtrAlunos_tamanho(ListPtrAlunos lista)
     return i;
 }
 
-ListPtrAlunos destroi_listaPtrAlunos(ListPtrAlunos lista)
+ListPtrExames destroi_listaPtrExames(ListPtrExames lista)
 {
-    ListPtrAlunos p;
+    ListPtrExames p;
     if(lista != NULL)
     {
         while(lista->next != NULL)
@@ -42,10 +42,10 @@ ListPtrAlunos destroi_listaPtrAlunos(ListPtrAlunos lista)
     return NULL;
 }
 
-ListPtrAlunos insere_fim_listaPtrAlunos(ListPtrAlunos lista, Aluno *c)
+ListPtrExames insere_fim_listaPtrExames(ListPtrExames lista, Exame *c)
 {
-    ListPtrAlunos p, aux;
-    p = (ListPtrAlunos)malloc(sizeof(aluno_ptr_node));
+    ListPtrExames p, aux;
+    p = (ListPtrExames)malloc(sizeof(exame_ptr_node));
     aux = lista;
     if(p != NULL)
     {
@@ -60,28 +60,28 @@ ListPtrAlunos insere_fim_listaPtrAlunos(ListPtrAlunos lista, Aluno *c)
     return lista;
 }
 
-void imprime_listaPtrAlunos(ListPtrAlunos lista)
+void imprime_listaPtrExames(ListPtrExames lista)
 {
-    ListPtrAlunos p;
+    ListPtrExames p;
     p = lista;
     while(p != NULL)
     {
-        imprime_aluno(*p->info);
+        imprime_exame(*p->info);
         p = p->next;
     }
     printf("\n");
 }
 
-void escreve_listaPtrAlunos(ListPtrAlunos lista, char *ficheiro)
+void escreve_listaPtrExames(ListPtrExames lista, char *ficheiro)
 {
     FILE *f = fopen(ficheiro, "a");
-    ListPtrAlunos p;
+    ListPtrExames p;
     p = lista;
     if (f != NULL)
     {
         while(p != NULL)
         {
-            escreve_alunos(*p->info, f);
+            escreve_exame(*p->info, f);
             p = p->next;
         }
         fprintf(f, "\n");
@@ -89,12 +89,12 @@ void escreve_listaPtrAlunos(ListPtrAlunos lista, char *ficheiro)
     }
 }
 
-ListPtrAlunos elimina_PtrAluno(ListPtrAlunos lista, Aluno c)
+ListPtrExames elimina_PtrExame(ListPtrExames lista, Exame c)
 {
-    ListPtrAlunos aux, ant;
+    ListPtrExames aux, ant;
     aux = lista;
     ant = NULL;
-    while(aux != NULL && aluno_compare(c, *(aux->info)) != 1)
+    while(aux != NULL && exame_compare(c, *(aux->info)) != 1)
     {
         ant = aux;
         aux = aux->next;

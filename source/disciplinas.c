@@ -48,39 +48,6 @@ void copy_disciplina(Disciplina *dc1, Disciplina *dc2)
     strcpy(dc1->docente, dc2->docente);
 }
 
-// verifica se a disciplina esta na lista
-int verifica_Disciplinalista(ListDisciplinas lista, Disciplina dc)
-{
-    ListDisciplinas aux;
-    aux = lista;
-    while(aux != NULL && disciplina_compare(dc,aux->info) != 1)
-        aux = aux->next;
-    if(aux == NULL)
-        return 0;
-    else return 1;
-}
-
-
-ListDisciplinas insere_fim_listaDisciplinas(ListDisciplinas lista, Disciplina dc)
-{
-    ListDisciplinas p, aux;
-    if(verifica_Disciplinalista(lista, dc) == 1)
-        return lista;
-    p = (ListDisciplinas)malloc(sizeof(disciplina_node));
-    aux = lista;
-    if(p != NULL)
-    {
-        copy_disciplina(&p->info, &dc);
-        p->next = NULL;
-        if(aux == NULL)
-            return p;
-        while(aux->next != NULL)
-            aux = aux->next;
-        aux->next = p;
-    }
-    return lista;
-}
-
 ListDisciplinas procura_disciplina(ListDisciplinas lista, Disciplina dc)
 {
     ListDisciplinas aux;
@@ -139,13 +106,42 @@ ListDisciplinas elimina_disciplina_lista(ListDisciplinas lista, Disciplina x)
 {
     ListDisciplinas aux, ant;
     procura_disciplina1(lista, x, &ant, &aux);
-    if(aux != NULL)
+    if(aux != NULL && lista == aux)
+    {
+        ant = aux->next;
+        free(aux);
+        printf("\n -> Disciplina Removido com sucesso\n");
+        return ant;
+    }
+    else if(aux != NULL && ant != NULL)
     {
         ant->next = aux->next;
         free(aux);
-        printf("\n -> Disciplina Removida com sucesso\n");
+        printf("\n -> Disciplina Removido com sucesso\n");
     }
     else
-        printf("\n -> Disciplina nao encontrada\n");
+        printf("\n -> Disciplina nao encontrado\n");
     return lista;
+}
+
+void escreve_disciplina(Disciplina dc, FILE *f)
+{
+    fprintf(f, "\nNome: %s\nDocente Responsavel: %s\n", dc.nome, dc.docente);
+}
+
+void escreve_listaDisciplinas(ListDisciplinas lista, char *ficheiro)
+{
+    FILE *f = fopen(ficheiro, "a");
+    ListDisciplinas p;
+    p = lista;
+    if (f != NULL)
+    {
+        while(p != NULL)
+        {
+            escreve_disciplina(p->info, f);
+            p = p->next;
+        }
+        fprintf(f,"\n");
+        fclose(f);
+    }
 }

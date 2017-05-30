@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "structs.h"
+#include "alunos.h"
 
 
 ListPtrAlunos find_alunoPtr(ListPtrAlunos lista, Aluno al);
@@ -13,5 +14,6 @@ ListPtrAlunos destroi_listaPtrAlunos(ListPtrAlunos lista);
 ListPtrAlunos insere_fim_listaPtrAlunos(ListPtrAlunos lista, Aluno *c);
 void imprime_listaPtrAlunos(ListPtrAlunos lista);
 ListPtrAlunos elimina_PtrAluno(ListPtrAlunos lista, Aluno c);
+void escreve_listaPtrAlunos(ListPtrAlunos lista, char *ficheiro);
 
 #endif 

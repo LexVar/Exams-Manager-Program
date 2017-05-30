@@ -1,14 +1,14 @@
-AED
-Pedro Abreu
+ATD2
+Alberto
+IRC
+Vasco Sousa
+MULT
+Rui Pedro Paiva
+POO
+Nuno Pimenta
 PPP
 Marco Vieira
-ATD
-Alberto Cardoso
 SCC
 Maria Marcelino
-AMII
-Julio Neves
-PC
-Fernando Boavida
-MULT
-Rui Paiva
+SO
+Vasco Sousa
